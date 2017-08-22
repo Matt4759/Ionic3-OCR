@@ -1,18 +1,63 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { NavController, ActionSheetController, LoadingController } from 'ionic-angular';
 import { Camera } from '@ionic-native/camera';
 import  {WordrunPage} from '../wordrun/wordrun'
+import Tesseract from 'tesseract.js';  
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
+
 export class HomePage {
   srcImage: string;
   OCRAD: any;
+  @ViewChild('scannedImg')
+  public scannedImg: ElementRef;
 
+  public  recognizedText: string;
+  private progress: any;
+  private result: any;
+  private d: Date;
   constructor(
-    public navCtrl: NavController,public actionSheetCtrl: ActionSheetController,public loadingCtrl: LoadingController,private camera:Camera
+    public cd: ChangeDetectorRef,public navCtrl: NavController,public actionSheetCtrl: ActionSheetController,public loadingCtrl: LoadingController,private camera:Camera
   ) {}
+  //tesseract implementation
+  ionViewDidLoad(){
+    this.recognizeText(this.scannedImg.nativeElement.src);
+  }
+  recognizeText(image) {
+    this.d = new Date();
+
+      Tesseract.recognize(image)
+          .progress((progress) => {
+              var progressStatus = progress.status + " [" + Math.ceil(progress.progress * 100) + "%]";
+              console.log(progressStatus);
+
+              this.progress = progressStatus;
+          })
+          .catch(err => {
+              console.log(err);
+          })
+          .then((tesseractResult) => {
+              console.log(tesseractResult);
+              // console.log(JSON.stringify(tesseractResult)); - circular json
+              let t = new Date();
+              console.log("millis", (t.getTime() - this.d.getTime()) );
+              this.result = tesseractResult;
+              this.recognizedText = tesseractResult.text;
+              this.navCtrl.push(WordrunPage, {
+                text: this.recognizedText,
+                
+              });
+              
+              
+          });
+  }
+
+
+
+
+
   //allow them to choose from multiple photo options, 0 = library pull 1 = camera take pic
   presentActionSheet() {
     const actionSheet = this.actionSheetCtrl.create({
