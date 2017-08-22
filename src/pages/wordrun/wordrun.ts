@@ -1,12 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-/**
- * Generated class for the WordrunPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
 
 @Component({
   selector: 'page-wordrun',
@@ -24,14 +18,12 @@ text;
     
     setInterval(function() {            // setInterval makes it run repeatedly
         document
-            .getElementById('fruit')
+            .getElementById('words')
             .innerHTML = title[i++];    // get the item and increment i to move to the next
         if (i == title.length) i = 0;   // reset to first element if you've reached the end
     }, 150);  
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad WordrunPage');
-  }
+ 
 
 }

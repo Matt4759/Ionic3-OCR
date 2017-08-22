@@ -5,27 +5,15 @@
 </ion-header>
 
 <ion-content padding>
-  <!-- <button class="select-image" ion-button block *ngIf="!srcImage" (click)="presentActionSheet()" color="light">
-    <ion-icon name="camera"></ion-icon>
-  </button>
-
-  <div *ngIf="srcImage" class="image-wrapper">
-    <img id="image" [src]="srcImage" />
-    <button ion-button icon-left block (click)="analyze()" color="light">
-      <ion-icon name="search"></ion-icon>
-      Read
-    </button>
-    <button ion-button icon-left block (click)="restart()" color="light">
-      <ion-icon name="refresh"></ion-icon>
-      Restart
-    </button>
-  </div> -->
-
-  <ion-card>
-      <img src="../../assets/test/text.png" #scannedImg />
-
-      <ion-card-content>
-        <div>{{recognizedText}}</div>
-      </ion-card-content>
-    </ion-card>
+    <ion-card>
+        <img src="../../assets/test/text.png" #scannedImg />
+  
+        <ion-card-header>
+          {{progress}}
+        </ion-card-header>
+  
+        <ion-card-content>
+          <span>{{recognizedText}}</span>
+        </ion-card-content>
+      </ion-card>
 </ion-content>
