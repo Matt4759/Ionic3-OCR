@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, ActionSheetController, LoadingController } from 'ionic-angular';
 import { Camera } from '@ionic-native/camera';
-
+import  {WordrunPage} from '../wordrun/wordrun'
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -66,6 +66,10 @@ export class HomePage {
       loader.dismissAll();
       alert(text);
       console.log(text);
+      this.navCtrl.push(WordrunPage, {
+        text: text,
+        
+      });
     });
   }
 
